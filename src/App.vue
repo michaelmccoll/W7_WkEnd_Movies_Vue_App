@@ -1,17 +1,46 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <header>
+      <h1>My Movies</h1>
+    </header>
+    <form v-on:submit.prevent="searchClick()">
+      <label for="search"></label>
+      <input id="search" type="text" v-model="search" placeholder="Search for a movie...">
+      <input type="submit" value="Search">
+    </form>
+    <movie-detail v-if="movieData" :movieData="movieData"></movie-detail>
+    
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import MovieDetail from './components/MovieDetail';
+import FavMovie from './components/FavMovie';
 
 export default {
   name: 'App',
+  data(){
+    return {
+      movieData: [],
+      favMovies: null,
+      search: null,
+    } 
+  },
   components: {
-    HelloWorld
+    'movie-detail': MovieDetail,
+    'fav-movie': FavMovie
+  },
+  mounted(){
+
+  },
+  methods:{
+    searchClick: function(search){
+      fetch(`http://www.omdbapi.com/?t=${this.search}&apikey=2e6f3201`)
+        .then(res => res.json())
+        .then(data => this.movieData = data)
+
+      // Maybe need to add async - await
+  }
   }
 }
 </script>
