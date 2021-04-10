@@ -1,34 +1,39 @@
 <template>
   <div id="app">
-    <header>
-      <h1>My Movies</h1>
+    <header class="header">
+      <h1 class="my_movies">My Movies</h1>
+      <form v-on:submit.prevent="searchClick()">
+        <label for="search"></label>
+        <input id="search" type="text" v-model="search" placeholder="Search for a movie...">
+        <input type="submit" value="Search">
+      </form>
     </header>
-    <form v-on:submit.prevent="searchClick()">
-      <label for="search"></label>
-      <input id="search" type="text" v-model="search" placeholder="Search for a movie...">
-      <input type="submit" value="Search">
-    </form>
+    
     <movie-detail v-if="movieData" :movieData="movieData"></movie-detail>
+
+    <button v-if="!favMovies.includes(movieData.imdbID)" v-on:click="addToFavourites">Add to Favourites</button>
+
+    <fav-movies :favMovies="favMovies"></fav-movies>
     
   </div>
 </template>
 
 <script>
 import MovieDetail from './components/MovieDetail';
-import FavMovie from './components/FavMovie';
+import FavMovie from './components/FavMovie.vue';
 
 export default {
   name: 'App',
   data(){
     return {
       movieData: [],
-      favMovies: null,
+      favMovies: [],
       search: null,
     } 
   },
   components: {
     'movie-detail': MovieDetail,
-    'fav-movie': FavMovie
+    'fav-movies': FavMovie,
   },
   mounted(){
 
@@ -38,20 +43,30 @@ export default {
       fetch(`http://www.omdbapi.com/?t=${this.search}&apikey=2e6f3201`)
         .then(res => res.json())
         .then(data => this.movieData = data)
-
-      // Maybe need to add async - await
-  }
+    },
+    addToFavourites: function() {
+    this.favMovies.push(this.movieData)
+  },
   }
 }
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  margin: 5px;
+}
+.header {
+  background-image: url('./assets/movie-header.jpg');
+  height: 150px;
+  padding: 2px;
+}
+.my_movies {
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 40pt;
+  padding: 5px;
+  margin: 18px;
+  color: white;
 }
 </style>
