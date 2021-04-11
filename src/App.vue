@@ -11,16 +11,18 @@
     
     <movie-detail v-if="movieData" :movieData="movieData"></movie-detail>
 
-    <button v-if="!favMovies.includes(movieData.imdbID)" v-on:click="addToFavourites">Add to Favourites</button>
+    <button v-if="!favMovies.includes(movieData)" v-on:click="addToFavourites">Add to Favourites</button>
 
     <fav-movies :favMovies="favMovies"></fav-movies>
-    
+ 
   </div>
 </template>
 
 <script>
 import MovieDetail from './components/MovieDetail';
 import FavMovie from './components/FavMovie.vue';
+// import MovieStats from './components/MovieStats.vue';
+// import { eventBus } from "@/main.js";
 
 export default {
   name: 'App',
@@ -28,14 +30,17 @@ export default {
     return {
       movieData: [],
       favMovies: [],
+      // boxOfficeStats: [],
       search: null,
     } 
   },
   components: {
     'movie-detail': MovieDetail,
     'fav-movies': FavMovie,
+    // 'movie-stats': MovieStats,
   },
   mounted(){
+
 
   },
   methods:{
@@ -45,8 +50,11 @@ export default {
         .then(data => this.movieData = data)
     },
     addToFavourites: function() {
-    this.favMovies.push(this.movieData)
-  },
+      this.favMovies.push(this.movieData)
+    },
+    // statsClick: function(){
+    //   this.boxOfficeStats.push(this.favMovies)
+    // },
   }
 }
 </script>

@@ -100,8 +100,8 @@ export default {
 }
 
 .img {
-    margin: 8px 8px 8px 80px;
-    height: 400px;
+    margin: 16px 8px 8px 100px;
+    height: 350px;
     border: 2px solid;
     border-color: darkgray;
     grid-area: image;
@@ -113,7 +113,7 @@ export default {
     grid-template-columns: 2fr 1fr 3fr;
     grid-template-rows: auto;
     grid-template-areas:
-        "title title title"
+        "image title title"
         "image plotT plot"
         "image genreT genre"
         "image actorsT actors"

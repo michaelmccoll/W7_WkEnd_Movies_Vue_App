@@ -2,7 +2,8 @@
   <div id="fav_movies">
       <h2 class="fav-title">Favourite Movies</h2>
       <ul>
-          <li v-for="favMovie in favMovies"><img class="small-img" :src="favMovie.Poster"/><button class="button" @click="removeFromFavourites(favMovie)">X</button></li>
+          <li v-for="(favMovie, index) in favMovies" :key="index"><img class="small-img" :src="favMovie.Poster"/>
+          </li>
       </ul>
   </div>
 </template>
@@ -12,11 +13,11 @@ export default {
     name: 'fav-movies',
     props: ['favMovies'],
     methods:{
-        removeFromFavourites: function(favMovie) {
-        this.favMovies.pop(favMovie)
-        }
+
     }
+
 }
+
 </script>
 
 <style>
