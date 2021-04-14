@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import {eventBus} from './main.js'
 import MovieDetail from './components/MovieDetail';
 import FavMovie from './components/FavMovie.vue';
 // import MovieStats from './components/MovieStats.vue';
@@ -30,7 +31,7 @@ export default {
     return {
       movieData: [],
       favMovies: [],
-      // boxOfficeStats: [],
+      boxOfficeStats: [],
       search: null,
     } 
   },
@@ -40,11 +41,15 @@ export default {
     // 'movie-stats': MovieStats,
   },
   mounted(){
+    eventBus.$on('delete-fav', (id) => {
+        const index = this.favMovies.findIndex(favMovie => favMovie._id === id);
+        console.log(index);
+        this.favMovies.splice(index, 1);
+        })
+    },
 
-
-  },
   methods:{
-    searchClick: function(search){
+    searchClick: function(){
       fetch(`http://www.omdbapi.com/?t=${this.search}&apikey=2e6f3201`)
         .then(res => res.json())
         .then(data => this.movieData = data)
@@ -52,11 +57,11 @@ export default {
     addToFavourites: function() {
       this.favMovies.push(this.movieData)
     },
-    // statsClick: function(){
-    //   this.boxOfficeStats.push(this.favMovies)
-    // },
-  }
-}
+    
+
+    }     
+    }
+    
 </script>
 
 <style>
@@ -74,7 +79,15 @@ export default {
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 40pt;
   padding: 5px;
-  margin: 18px;
+  margin: 10px;
   color: white;
+}
+input {
+  margin: 4px;
+  padding: 4px;
+}
+button {
+  margin: 8px;
+  padding: 4px;
 }
 </style>
