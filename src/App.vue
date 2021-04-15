@@ -41,13 +41,8 @@ export default {
     // 'movie-stats': MovieStats,
   },
   mounted(){
-    eventBus.$on('delete-fav', (id) => {
-        const index = this.favMovies.findIndex(favMovie => favMovie._id === id);
-        console.log(index);
-        this.favMovies.splice(index, 1);
-        })
-    },
 
+  },
   methods:{
     searchClick: function(){
       fetch(`http://www.omdbapi.com/?t=${this.search}&apikey=2e6f3201`)
@@ -57,11 +52,8 @@ export default {
     addToFavourites: function() {
       this.favMovies.push(this.movieData)
     },
-    
-
-    }     
-    }
-    
+    },   
+}
 </script>
 
 <style>

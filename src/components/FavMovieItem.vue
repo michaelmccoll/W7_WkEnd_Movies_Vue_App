@@ -1,7 +1,6 @@
 <template>
     <li>
       <img class="small-img" :src="favMovie.Poster"/>
-      <button class="button" v-on:click="deleteFavMovie(favMovie._id)">X</button>
     </li>
 </template>
 
@@ -12,9 +11,7 @@ export default {
     name: 'fav-movie-item',
     props:['favMovie'],
     methods:{
-        deleteFavMovie(id){
-          eventBus.$emit('delete-fav',id);
-        }
+       
     },
 }
 
